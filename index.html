@@ -306,14 +306,19 @@ const SUPABASE_KEY = 'sb_publishable__4xJBaQpP30A_wt6qtvQjg_t1na3cqt';
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-  async function checkAuth() {
-    const { data: { session } } = await supabaseClient.auth.getSession();
-    if (session) {
-      document.getElementById('auth-modal').style.display = 'none';
-    } else {
-      document.getElementById('auth-modal').style.display = 'flex';
-    }
+async function checkAuth() {
+  // Le pregunta directamente al servidor de Supabase si el usuario está baneado
+  const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    await supabaseClient.auth.signOut();
+    document.getElementById('auth-modal').style.display = 'flex';
+  } else {
+    document.getElementById('auth-modal').style.display = 'none';
   }
+}
+
+checkAuth();
 
   async function loginUser() {
     const email = document.getElementById('auth-email').value;
