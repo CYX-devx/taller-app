@@ -1,139 +1,268 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>CYX MotorGest - Taller Pro</title>
-  <link rel="manifest" href="manifest.json">
-  <style>
-    body { font-family: system-ui, sans-serif; background: #121212; color: #fff; margin: 0; padding: 20px; }
-    .card { background: #1e1e1e; padding: 20px; border-radius: 12px; margin-bottom: 20px; border: 1px solid #333; }
-    button { background: #007acc; color: white; border: none; padding: 10px 15px; border-radius: 6px; cursor: pointer; font-weight: bold; width: 100%; margin-top: 10px; }
-    input, select { width: 100%; padding: 10px; margin: 8px 0; border-radius: 6px; border: 1px solid #444; background: #222; color: white; box-sizing: border-box; }
-    .hidden { display: none; }
-    .plan-box { border: 2px solid #007acc; padding: 15px; border-radius: 8px; margin-top: 10px; text-align: center; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CYX MotorGest - Admin</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #0b0e14; color: #e1e1e6; min-height: 100vh; padding: 20px; }
+        
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #1e293b; }
+        .logo-title h1 { font-size: 1.6rem; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .logo-title h1 span { color: #f59e0b; font-size: 0.8rem; background: #312e81; padding: 2px 8px; border-radius: 6px; }
+        .logo-title p { color: #3b82f6; font-size: 0.85rem; margin-top: 4px; }
+        
+        .btn-print { background: #10b981; color: #fff; border: none; padding: 10px 18px; border-radius: 8px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+        .btn-print:hover { background: #059669; }
+
+        /* Dashboard Grid Layout */
+        .dashboard-grid { display: grid; grid-template-columns: 380px 1fr; gap: 20px; }
+        @media (max-width: 900px) { .dashboard-grid { grid-template-columns: 1fr; } }
+
+        /* Tarjetas */
+        .card { background: #131722; border: 1px solid #1e293b; border-radius: 12px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.4); }
+        .card h2 { font-size: 1.1rem; color: #fff; margin-bottom: 15px; }
+
+        /* Formulario */
+        .input-group { margin-bottom: 12px; }
+        label { display: block; font-size: 0.75rem; font-weight: bold; color: #94a3b8; text-transform: uppercase; margin-bottom: 4px; }
+        input, textarea { width: 100%; padding: 10px; background: #1a202c; border: 1px solid #2d3748; border-radius: 6px; color: #fff; font-size: 0.9rem; outline: none; }
+        input:focus, textarea:focus { border-color: #3b82f6; }
+        textarea { resize: vertical; height: 60px; }
+        input[type="file"] { padding: 6px; background: #1a202c; font-size: 0.8rem; color: #a0aec0; }
+
+        .btn-create { width: 100%; background: #f59e0b; color: #000; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; margin-top: 10px; transition: 0.2s; }
+        .btn-create:hover { background: #d97706; }
+
+        /* Tabla y Búsqueda */
+        .table-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .search-box input { width: 200px; padding: 8px 12px; font-size: 0.85rem; border-radius: 20px; }
+
+        table { width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85rem; }
+        th { background: #1a202c; color: #94a3b8; padding: 10px; font-size: 0.75rem; text-transform: uppercase; }
+        td { padding: 12px 10px; border-bottom: 1px solid #1e293b; vertical-align: middle; }
+
+        .img-thumb { width: 45px; height: 45px; object-fit: cover; border-radius: 6px; border: 1px solid #334155; background: #0f172a; }
+        .badge-plate { color: #f59e0b; font-weight: bold; font-family: monospace; font-size: 0.95rem; }
+        .client-info strong { color: #fff; display: block; }
+        .client-info span { color: #64748b; font-size: 0.75rem; }
+        .vehicle-info strong { color: #cbd5e1; display: block; }
+        .vehicle-info span { color: #94a3b8; font-size: 0.75rem; }
+        .monto { color: #34d399; font-weight: bold; }
+
+        /* Estados */
+        .btn-status { padding: 4px 10px; border-radius: 6px; font-size: 0.75rem; font-weight: bold; border: none; cursor: pointer; }
+        .status-proceso { background: #ea580c; color: #fff; }
+        .status-listo { background: #16a34a; color: #fff; }
+        .btn-del { background: #ef4444; color: #fff; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 0.75rem; }
+
+        /* Vista de Impresión / PDF */
+        @media print {
+            body { background: #fff; color: #000; padding: 0; }
+            header, .no-print, .search-box, .btn-del, .btn-status, .btn-print, .form-card { display: none !important; }
+            .dashboard-grid { display: block; }
+            .card { background: #fff; border: none; box-shadow: none; padding: 0; }
+            .card h2 { color: #000; font-size: 1.4rem; border-bottom: 2px solid #000; padding-bottom: 5px; margin-bottom: 15px; }
+            table { border: 1px solid #ccc; width: 100%; }
+            th { background: #f1f5f9; color: #000; border: 1px solid #ccc; }
+            td { border: 1px solid #ccc; color: #000; }
+            .badge-plate { color: #000; }
+            .client-info strong, .vehicle-info strong { color: #000; }
+            .client-info span, .vehicle-info span { color: #444; }
+            .monto { color: #000; }
+            .print-header { display: block !important; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
+        }
+        .print-header { display: none; }
+    </style>
 </head>
 <body>
 
-  <!-- PANTALLA 1: REGISTRO / LOGIN -->
-  <div id="auth-screen" class="card">
-    <h2>CYX MotorGest - Acceso Mecánico</h2>
-    <input type="text" id="username" placeholder="Nombre del Taller / Mecánico">
-    <input type="password" id="password" placeholder="Contraseña">
-    <button onclick="login()">Iniciar Sesión / Registrarse</button>
-  </div>
-
-  <!-- PANTALLA 2: SELECCIÓN DE PLAN -->
-  <div id="plan-screen" class="card hidden">
-    <h2>Selecciona tu Membresía</h2>
-    <div class="plan-box">
-      <h3>Plan Mensual PRO</h3>
-      <p>$30 / Mes</p>
-      <button onclick="setPlan('Mensual')">Activar Plan Mensual</button>
+    <!-- Encabezado Visible para Reportes Impresos -->
+    <div class="print-header">
+        <h1>🏎️ CYX MotorGest - Reporte de Taller</h1>
+        <p>Gestión rápida de vehículos, fallas y órdenes de trabajo</p>
     </div>
-    <div class="plan-box" style="border-color: #00ff88;">
-      <h3>Plan Anual ELITE</h3>
-      <p>$300 / Año (Ahorras 2 meses)</p>
-      <button onclick="setPlan('Anual')" style="background: #00ff88; color: #000;">Activar Plan Anual</button>
+
+    <!-- Header Principal -->
+    <header class="no-print">
+        <div class="logo-title">
+            <h1>🏎️ CYX MotorGest <span>ADMIN</span></h1>
+            <p>Gestión rápida de vehículos, fallas y órdenes</p>
+        </div>
+        <button class="btn-print" onclick="window.print()">🖨️ Imprimir Reporte / PDF</button>
+    </header>
+
+    <div class="dashboard-grid">
+        <!-- Panel Izquierdo: Formulario Orden de Trabajo -->
+        <div class="card form-card no-print">
+            <h2>Nueva Orden de Trabajo</h2>
+            <form id="orderForm">
+                <div class="input-group">
+                    <label>Placa del Vehículo</label>
+                    <input type="text" id="placa" placeholder="AB123CD" required>
+                </div>
+                <div class="input-group">
+                    <label>Nombre del Cliente</label>
+                    <input type="text" id="cliente" placeholder="Juan Pérez" required>
+                </div>
+                <div class="input-group">
+                    <label>Teléfono / WhatsApp</label>
+                    <input type="text" id="telefono" placeholder="04141234567">
+                </div>
+                <div class="input-group">
+                    <label>Vehículo (Marca / Modelo)</label>
+                    <input type="text" id="vehiculo" placeholder="Toyota Corolla 2012" required>
+                </div>
+                <div class="input-group">
+                    <label>Foto del Vehículo</label>
+                    <input type="file" id="foto" accept="image/*">
+                </div>
+                <div class="input-group">
+                    <label>Falla / Servicio Requerido</label>
+                    <textarea id="falla" placeholder="Cambio de aceite y revisión de frenos"></textarea>
+                </div>
+                <div class="input-group">
+                    <label>Presupuesto Estimado ($)</label>
+                    <input type="number" id="monto" placeholder="80">
+                </div>
+                <button type="submit" class="btn-create">+ CREAR ORDEN</button>
+            </form>
+        </div>
+
+        <!-- Panel Derecho: Tabla de Órdenes -->
+        <div class="card table-card">
+            <div class="table-header no-print">
+                <h2>Órdenes en Taller</h2>
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="🔍 Buscar por placa..." onkeyup="filtrarTabla()">
+                </div>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Foto</th>
+                        <th>Placa</th>
+                        <th>Cliente</th>
+                        <th>Vehículo / Falla</th>
+                        <th>Monto</th>
+                        <th>Estado</th>
+                        <th class="no-print">Acción</th>
+                    </tr>
+                </thead>
+                <tbody id="tablaOrdenes">
+                    <!-- Registros dinámicos -->
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 
-  <!-- PANTALLA 3: PANEL PRINCIPAL (OFFLINE) -->
-  <div id="app-screen" class="card hidden">
-    <h2 id="taller-title">Panel de Control</h2>
-    <p>Estado del Plan: <b id="user-plan" style="color:#00ff88;">-</b></p>
-    <hr>
-    <h3>Agregar Cliente / Vehículo</h3>
-    <input type="text" id="cli-name" placeholder="Nombre del Cliente">
-    <input type="text" id="cli-car" placeholder="Modelo de Vehículo (ej. Moto / Carro)">
-    <button onclick="addClient()">Guardar en Base Local (Offline)</button>
+<script>
+    let ordenes = JSON.parse(localStorage.getItem('cyx_ordenes')) || [];
+    let fotoBase64 = '';
 
-    <h3>Clientes Registrados</h3>
-    <ul id="client-list"></ul>
+    // Convertir imagen a Base64 para guardarla offline
+    document.getElementById('foto').addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                fotoBase64 = evt.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
 
-    <button onclick="exportData()" style="background: #28a745;">Exportar Datos (CSV / Excel)</button>
-    <button onclick="logout()" style="background: #dc3545;">Cerrar Sesión</button>
-  </div>
+    // Guardar nueva orden
+    document.getElementById('orderForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
-  <script>
-    // Configuración PWA / Service Worker
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('sw.js').catch(()=>{});
+        const nuevaOrden = {
+            id: Date.now(),
+            placa: document.getElementById('placa').value.trim().toUpperCase(),
+            cliente: document.getElementById('cliente').value.trim(),
+            telefono: document.getElementById('telefono').value.trim(),
+            vehiculo: document.getElementById('vehiculo').value.trim(),
+            foto: fotoBase64 || 'https://via.placeholder.com/50?text=Auto',
+            falla: document.getElementById('falla').value.trim(),
+            monto: document.getElementById('monto').value || '0',
+            estado: 'En Proceso'
+        };
+
+        ordenes.unshift(nuevaOrden);
+        guardarYRenderizar();
+        
+        this.reset();
+        fotoBase64 = '';
+    });
+
+    function cambiarEstado(id) {
+        ordenes = ordenes.map(o => {
+            if (o.id === id) {
+                o.estado = o.estado === 'En Proceso' ? 'Listo' : 'En Proceso';
+            }
+            return o;
+        });
+        guardarYRenderizar();
     }
 
-    let currentUser = localStorage.getItem('cyx_user');
-    let currentPlan = localStorage.getItem('cyx_plan');
-
-    function init() {
-      if (!currentUser) {
-        show('auth-screen');
-      } else if (!currentPlan) {
-        show('plan-screen');
-      } else {
-        document.getElementById('taller-title').innerText = "Taller: " + currentUser;
-        document.getElementById('user-plan').innerText = currentPlan;
-        renderClients();
-        show('app-screen');
-      }
+    function eliminarOrden(id) {
+        if (confirm('¿Eliminar esta orden del taller?')) {
+            ordenes = ordenes.filter(o => o.id !== id);
+            guardarYRenderizar();
+        }
     }
 
-    function show(id) {
-      ['auth-screen', 'plan-screen', 'app-screen'].forEach(s => document.getElementById(s).classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
+    function guardarYRenderizar() {
+        localStorage.setItem('cyx_ordenes', JSON.stringify(ordenes));
+        renderTabla(ordenes);
     }
 
-    function login() {
-      const u = document.getElementById('username').value;
-      if (u) {
-        localStorage.setItem('cyx_user', u);
-        currentUser = u;
-        init();
-      }
+    function renderTabla(lista) {
+        const tbody = document.getElementById('tablaOrdenes');
+        tbody.innerHTML = '';
+
+        if (lista.length === 0) {
+            tbody.innerHTML = '<tr><td colspan="7" style="text-align:center; color:#64748b; padding:20px;">No hay órdenes registradas.</td></tr>';
+            return;
+        }
+
+        lista.forEach(o => {
+            const statusClass = o.estado === 'En Proceso' ? 'status-proceso' : 'status-listo';
+            tbody.innerHTML += `
+                <tr>
+                    <td><img src="${o.foto}" class="img-thumb" alt="Carro"></td>
+                    <td><span class="badge-plate">${o.placa}</span></td>
+                    <td class="client-info">
+                        <strong>${o.cliente}</strong>
+                        <span>${o.telefono}</span>
+                    </td>
+                    <td class="vehicle-info">
+                        <strong>${o.vehiculo}</strong>
+                        <span>${o.falla}</span>
+                    </td>
+                    <td><span class="monto">$${o.monto}</span></td>
+                    <td>
+                        <button class="btn-status ${statusClass}" onclick="cambiarEstado(${o.id})">${o.estado}</button>
+                    </td>
+                    <td class="no-print">
+                        <button class="btn-del" onclick="eliminarOrden(${o.id})">X</button>
+                    </td>
+                </tr>
+            `;
+        });
     }
 
-    function setPlan(plan) {
-      localStorage.setItem('cyx_plan', plan);
-      currentPlan = plan;
-      init();
+    function filtrarTabla() {
+        const query = document.getElementById('searchInput').value.toUpperCase();
+        const filtradas = ordenes.filter(o => o.placa.includes(query) || o.cliente.toUpperCase().includes(query));
+        renderTabla(filtradas);
     }
 
-    function addClient() {
-      const name = document.getElementById('cli-name').value;
-      const car = document.getElementById('cli-car').value;
-      if (!name || !car) return;
-      
-      const clients = JSON.parse(localStorage.getItem('cyx_clients') || '[]');
-      clients.push({ name, car, date: new Date().toLocaleDateString() });
-      localStorage.setItem('cyx_clients', JSON.stringify(clients));
-      
-      document.getElementById('cli-name').value = '';
-      document.getElementById('cli-car').value = '';
-      renderClients();
-    }
-
-    function renderClients() {
-      const clients = JSON.parse(localStorage.getItem('cyx_clients') || '[]');
-      const list = document.getElementById('client-list');
-      list.innerHTML = clients.map(c => `<li><b>${c.name}</b> - ${c.car} (${c.date})</li>`).join('');
-    }
-
-    function exportData() {
-      const clients = JSON.parse(localStorage.getItem('cyx_clients') || '[]');
-      let csv = "Cliente,Vehiculo,Fecha\n" + clients.map(c => `"${c.name}","${c.car}","${c.date}"`).join("\n");
-      const blob = new Blob([csv], { type: 'text/csv' });
-      const a = document.createElement('a');
-      a.href = URL.createObjectURL(blob);
-      a.download = `Clientes_CYX_MotorGest.csv`;
-      a.click();
-    }
-
-    function logout() {
-      localStorage.clear();
-      location.reload();
-    }
-
-    init();
-  </script>
+    // Carga inicial
+    renderTabla(ordenes);
+</script>
 </body>
 </html>
