@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CYX MotorGest - Taller Automotriz</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @media print {
+      .no-print { display: none !important; }
+      body { background-color: white !important; color: black !important; padding: 0 !important; }
+      .print-border { border: 1px solid #ccc !important; }
+      .print-text-dark { color: black !important; }
+    }
+  </style>
+</head>
+<body class="bg-slate-900 text-slate-100 min-h-screen p-4 md:p-8">
+  <div id="app-content" class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- Encabezado -->
+    <div class="flex justify-between items-center border-b border-slate-700 pb-4">
+      <div>
+        <h1 class="text-2xl md:text-3xl font-bold text-amber-500">🏎️ CYX MotorGest</h1>
+        <p class="text-slate-400 text-sm">Gestión rápida de vehículos, fallas y órdenes</p>
+      </div>
+      <button onclick="window.print()" class="no-print bg-emerald-600 hover:bg-emerald-500 text-white font-bold py-2 px-4 rounded-lg shadow transition">
+        🖨️ Imprimir Reporte / PDF
+      </button>
+    </div>
+
+    <!-- Formulario e Inventario -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      
+      <!-- Formulario de Registro -->
+      <div class="no-print bg-slate-800 p-5 rounded-xl border border-slate-700 shadow-lg">
+        <h2 class="text-xl font-bold mb-4 text-slate-200">Nueva Orden de Trabajo</h2>
+        <form id="ordenForm" class="space-y-3">
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">PLACA DEL VEHÍCULO</label>
+            <input type="text" id="placa" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-amber-400 font-mono font-bold uppercase focus:outline-none focus:border-amber-500" placeholder="AB123CD">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">NOMBRE DEL CLIENTE</label>
+            <input type="text" id="cliente" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-amber-500" placeholder="Juan Pérez">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">TELÉFONO / WHATSAPP</label>
+            <input type="text" id="telefono" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-amber-500" placeholder="04141234567">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">VEHÍCULO (MARCA / MODELO)</label>
+            <input type="text" id="modelo" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-amber-500" placeholder="Toyota Corolla 2012">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">FOTO DEL VEHÍCULO</label>
+            <input type="file" id="fotoInput" accept="image/*" class="w-full bg-slate-900 border border-slate-700 rounded p-1 text-xs text-slate-400 file:mr-2 file:py-1 file:px-2 file:rounded file:border-0 file:text-xs file:font-semibold file:bg-amber-500 file:text-slate-950 hover:file:bg-amber-400 cursor-pointer">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">FALLA / SERVICIO REQUERIDO</label>
+            <textarea id="falla" rows="2" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-white focus:outline-none focus:border-amber-500" placeholder="Cambio de aceite y revisión de frenos"></textarea>
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-slate-400">PRESUPUESTO ESTIMADO ($)</label>
+            <input type="number" id="monto" required class="w-full bg-slate-900 border border-slate-700 rounded p-2 text-emerald-400 font-bold focus:outline-none focus:border-amber-500" placeholder="80">
+          </div>
+          <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-slate-950 font-extrabold py-3 rounded-lg shadow transition">
+            + CREAR ORDEN
+          </button>
+        </form>
+      </div>
+
+      <!-- Tabla de Órdenes -->
+      <div class="md:col-span-2 bg-slate-800 print:bg-white p-5 rounded-xl border border-slate-700 print-border shadow-lg space-y-4">
+        <div class="flex justify-between items-center no-print">
+          <h2 class="text-xl font-bold text-slate-200">Órdenes en Taller</h2>
+          <input type="text" id="buscador" onkeyup="filtrarTabla()" placeholder="🔍 Buscar por placa..." class="bg-slate-900 border border-slate-700 text-xs text-white rounded p-2 focus:outline-none focus:border-amber-500">
+        </div>
+
+        <div class="overflow-x-auto">
+          <table class="w-full text-left text-sm text-slate-300 print-text-dark">
+            <thead class="bg-slate-900 print:bg-slate-200 text-slate-400 print:text-black uppercase text-xs">
+              <tr>
+                <th class="p-3">Foto</th>
+                <th class="p-3">Placa</th>
+                <th class="p-3">Cliente</th>
+                <th class="p-3">Vehículo / Falla</th>
+                <th class="p-3">Monto</th>
+                <th class="p-3">Estado</th>
+                <th class="p-3 no-print">Acción</th>
+              </tr>
+            </thead>
+            <tbody id="tablaOrdenes" class="divide-y divide-slate-700 print:divide-slate-300">
+              <!-- Datos dinámicos -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    // 1. SISTEMA DE SEGURIDAD (TIPO KRECE)
+    async function verificarPago() {
+      try {
+        const linkGist = 'https://gist.githubusercontent.com/CYX-devx/6059c41390e3eeb6e2fde70282593c8e/raw/de9b19f90d7402dde6ffbb030d5268406c1a1d08/estado_taller.json';
+        const respuesta = await fetch(linkGist);
+        const datos = await respuesta.json();
+        
+        if (!datos.pago_al_dia) {
+          document.body.innerHTML = `
+            <div style="height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; background-color: #0f172a; color: white; text-align: center; padding: 20px;">
+              <h1 style="font-size: 3rem; color: #ef4444; font-weight: bold;">⚠️ SERVICIO SUSPENDIDO</h1>
+              <p style="font-size: 1.5rem; margin-top: 1rem;">La licencia de este mes ha expirado. Por favor, comunícate con soporte (CYX) para reactivar el sistema.</p>
+            </div>
+          `;
+        }
+      } catch (error) {
+        console.log("Modo offline o error de red. Operando normalmente.");
+      }
+    }
+    verificarPago();
+
+    // 2. LÓGICA DEL TALLER CON SOPORTE DE FOTOS
+    let ordenes = JSON.parse(localStorage.getItem('taller_ordenes')) || [];
+
+    function guardarYRenderizar() {
+      localStorage.setItem('taller_ordenes', JSON.stringify(ordenes));
+      const tbody = document.getElementById('tablaOrdenes');
+      tbody.innerHTML = '';
+      
+      ordenes.forEach((item, index) => {
+        const fotoHTML = item.foto 
+          ? `<img src="${item.foto}" class="w-12 h-12 object-cover rounded-lg border border-slate-600 print:w-16 print:h-16" />`
+          : `<div class="w-12 h-12 bg-slate-900 print:bg-slate-200 rounded-lg flex items-center justify-center text-xs text-slate-500">Sin foto</div>`;
+
+        tbody.innerHTML += `
+          <tr class="hover:bg-slate-750">
+            <td class="p-2">${fotoHTML}</td>
+            <td class="p-3 font-mono font-bold text-amber-400 print:text-black">${item.placa}</td>
+            <td class="p-3 font-semibold print:text-black">${item.cliente}<br><span class="text-xs text-slate-500 print:text-slate-700">${item.telefono}</span></td>
+            <td class="p-3"><span class="text-white print:text-black font-medium">${item.modelo}</span><br><span class="text-xs text-slate-400 print:text-slate-600">${item.falla}</span></td>
+            <td class="p-3 font-bold text-emerald-400 print:text-black">$${item.monto}</td>
+            <td class="p-3">
+              <span class="px-2 py-1 rounded text-xs font-bold ${item.estado === 'Listo' ? 'bg-emerald-900 text-emerald-300 print:bg-emerald-200 print:text-emerald-900' : 'bg-amber-900 text-amber-300 print:bg-amber-200 print:text-amber-900'}">
+                ${item.estado}
+              </span>
+            </td>
+            <td class="p-3 space-x-1 no-print">
+              <button onclick="cambiarEstado(${index})" class="text-xs bg-slate-700 hover:bg-slate-600 px-2 py-1 rounded text-slate-200">Estado</button>
+              <button onclick="eliminarOrden(${index})" class="text-xs bg-rose-900 hover:bg-rose-800 text-rose-200 px-2 py-1 rounded">X</button>
+            </td>
+          </tr>
+        `;
+      });
+    }
+
+    document.getElementById('ordenForm').addEventListener('submit', (e) => {
+      e.preventDefault();
+      
+      const fileInput = document.getElementById('fotoInput');
+      const file = fileInput.files[0];
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onloadend = function() {
+          crearOrden(reader.result);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        crearOrden("");
+      }
+    });
+
+    function crearOrden(fotoBase64) {
+      const nuevaOrden = {
+        placa: document.getElementById('placa').value.toUpperCase(),
+        cliente: document.getElementById('cliente').value,
+        telefono: document.getElementById('telefono').value,
+        modelo: document.getElementById('modelo').value,
+        falla: document.getElementById('falla').value,
+        monto: document.getElementById('monto').value,
+        foto: fotoBase64,
+        estado: 'En Proceso'
+      };
+      
+      ordenes.unshift(nuevaOrden);
+      guardarYRenderizar();
+      document.getElementById('ordenForm').reset();
+    }
+
+    function cambiarEstado(index) {
+      ordenes[index].estado = ordenes[index].estado === 'En Proceso' ? 'Listo' : 'En Proceso';
+      guardarYRenderizar();
+    }
+
+    function eliminarOrden(index) {
+      if(confirm('¿Eliminar esta orden del sistema?')) {
+        ordenes.splice(index, 1);
+        guardarYRenderizar();
+      }
+    }
+
+    function filtrarTabla() {
+      const q = document.getElementById('buscador').value.toUpperCase();
+      const filas = document.querySelectorAll('#tablaOrdenes tr');
+      filas.forEach(fila => {
+        const placa = fila.children[1].innerText;
+        fila.style.display = placa.includes(q) ? '' : 'none';
+      });
+    }
+
+    guardarYRenderizar();
+  </script>
+</body>
+</html>
