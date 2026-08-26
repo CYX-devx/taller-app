@@ -1,15 +1,23 @@
 {
   "name": "CYX MotorGest Pro",
   "short_name": "MotorGest",
+  "description": "Sistema de gestión de vehículos, fallas y órdenes de trabajo para talleres.",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#0b0e14",
   "theme_color": "#0b0e14",
   "icons": [
     {
-      "src": "https://via.placeholder.com/512",
+      "src": "https://dummyimage.com/192x192/0b0e14/ffffff.png&text=MG",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "https://dummyimage.com/512x512/0b0e14/ffffff.png&text=MG",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
