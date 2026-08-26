@@ -301,9 +301,10 @@
     renderTabla(ordenes);
 </script>
 <script>
-  const SUPABASE_URL = 'https://jtywxpliivmlyicxibvwy.supabase.co';
-  const SUPABASE_KEY = 'sb_publishable__4xJBaQpP30A_wt6qtvQjg_t1na3cqt';
-  const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+  const SUPABASE_URL = 'https://jtywxpiivmlyicxibvwy.supabase.co';
+const SUPABASE_KEY = 'sb_publishable__4xJBaQpP30A_wt6qtvQjg_t1na3cqt';
+
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
   async function checkAuth() {
     const { data: { session } } = await supabaseClient.auth.getSession();
