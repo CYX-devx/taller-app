@@ -54,7 +54,10 @@
   <script>
     const SUPABASE_URL = 'https://jtywxpliivmlyicxibvwy.supabase.co';
     const SUPABASE_KEY = 'EyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imp0eXd4cGlpdm1seWljeGlidnd5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc3NzUxMTEsImV4cCI6MjEwMzM1MTExMX0.HKatvEyqobjyo-RCtoeaIWi7zjA1Vm1ct33rTnr2Axs';
-    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    
+    const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+      auth: { persistSession: false }
+    });
 
     async function cargarUsuarios() {
       const tbody = document.getElementById('users-table-body');
