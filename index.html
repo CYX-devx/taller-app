@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es"
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,52 +77,46 @@
             .print-header { display: block !important; margin-bottom: 20px; border-bottom: 2px solid #000; padding-bottom: 10px; }
         }
         .print-header { display: none; }
-
-        /* Ajustes para Celulares */
-        @media (max-width: 768px) {
-            body { padding: 10px; }
-            .dashboard-grid { grid-template-columns: 1fr !important; }
-            .card { padding: 15px !important; }
-            input, select, textarea, button { width: 100% !important; font-size: 1rem !important; }
-            table { display: block; overflow-x: auto; white-space: nowrap; }
-        }
-
-        /* ESTILOS DEL MODAL DE PLANES Y PAGO */
-        .btn-upgrade { background: #2563eb; color: #fff; border: none; padding: 8px 16px; border-radius: 20px; font-weight: 600; cursor: pointer; }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.7); display: flex; justify-content: center; align-items: center; z-index: 1000; }
-        .hidden { display: none !important; }
-        .modal-card { background: #121212; border: 1px solid #2a2a2a; border-radius: 16px; padding: 24px; max-width: 380px; width: 90%; color: #fff; position: relative; font-family: sans-serif; }
-        .btn-close { position: absolute; right: 15px; top: 10px; background: none; border: none; color: #888; font-size: 24px; cursor: pointer; }
-        .plan-toggle { display: flex; background: #1e1e1e; border-radius: 20px; padding: 4px; margin-bottom: 8px; }
-        .toggle-btn { flex: 1; border: none; background: transparent; color: #aaa; padding: 8px; border-radius: 16px; cursor: pointer; font-weight: 600; }
-        .toggle-btn.active { background: #3b82f6; color: #fff; }
-        .discount-tag { display: block; text-align: center; color: #4ade80; font-size: 13px; margin-bottom: 16px; }
-        .plan-box { border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; background: #18181b; }
-        .badge-recommended { color: #60a5fa; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
-        .price { font-size: 28px; font-weight: bold; }
-        .period { color: #aaa; font-size: 14px; }
-        .btn-action { width: 100%; background: #3b82f6; border: none; color: #fff; padding: 10px; border-radius: 8px; font-weight: bold; margin: 16px 0; cursor: pointer; }
-        .features-list { list-style: none; padding: 0; font-size: 13px; color: #ccc; }
-        .features-list li { margin-bottom: 8px; }
-        .payment-box { margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; font-size: 12px; line-height: 1.4; }
+        /* Ajustes Responsive para Teléfonos */
+/* Ajustes para Celulares */
+  @media (max-width: 768px) {
+    body {
+      padding: 10px;
+    }
+    .dashboard-grid {
+      grid-template-columns: 1fr !important;
+    }
+    .card {
+      padding: 15px !important;
+    }
+    input, select, textarea, button {
+      width: 100% !important;
+      font-size: 1rem !important;
+    }
+    table {
+      display: block;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+  }
     </style>
 </head>
 <body>
     <!-- Pantalla de Bloqueo / Autenticación -->
-    <div id="auth-modal" style="position: fixed; inset: 0; background: rgba(11, 14, 20, 0.96); display: flex; align-items: center; justify-content: center; z-index: 9999;">
-      <div style="background: #1e293b; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid #334155; color: #fff;">
-        <h2 style="margin-bottom: 5px; color: #38bdf8; font-size: 1.4rem;">CYX MotorGest Pro</h2>
-        <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px;">Inicia sesión para acceder al sistema del taller</p>
-        
-        <input type="email" id="auth-email" placeholder="Correo electrónico" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box;">
-        <input type="password" id="auth-pass" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box;">
-        
-        <button onclick="loginUser()" style="width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 8px;">Iniciar Sesión</button>
-        <button onclick="registerUser()" style="width: 100%; padding: 10px; background: transparent; color: #38bdf8; border: 1px solid #38bdf8; font-weight: bold; border-radius: 6px; cursor: pointer;">Crear Cuenta ($10/mes)</button>
-        
-        <p id="auth-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 10px; min-height: 18px; text-align: center;"></p>
-      </div>
-    </div>
+<div id="auth-modal" style="position: fixed; inset: 0; background: rgba(11, 14, 20, 0.96); display: flex; align-items: center; justify-content: center; z-index: 9999;">
+  <div style="background: #1e293b; padding: 25px; border-radius: 12px; width: 90%; max-width: 400px; border: 1px solid #334155; color: #fff;">
+    <h2 style="margin-bottom: 5px; color: #38bdf8; font-size: 1.4rem;">CYX MotorGest Pro</h2>
+    <p style="font-size: 0.85rem; color: #94a3b8; margin-bottom: 20px;">Inicia sesión para acceder al sistema del taller</p>
+    
+    <input type="email" id="auth-email" placeholder="Correo electrónico" style="width: 100%; padding: 10px; margin-bottom: 12px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box;">
+    <input type="password" id="auth-pass" placeholder="Contraseña" style="width: 100%; padding: 10px; margin-bottom: 15px; background: #0f172a; border: 1px solid #334155; color: #fff; border-radius: 6px; box-sizing: border-box;">
+    
+    <button onclick="loginUser()" style="width: 100%; padding: 10px; background: #38bdf8; color: #0f172a; font-weight: bold; border: none; border-radius: 6px; cursor: pointer; margin-bottom: 8px;">Iniciar Sesión</button>
+    <button onclick="registerUser()" style="width: 100%; padding: 10px; background: transparent; color: #38bdf8; border: 1px solid #38bdf8; font-weight: bold; border-radius: 6px; cursor: pointer;">Crear Cuenta ($10/mes)</button>
+    
+    <p id="auth-error" style="color: #ef4444; font-size: 0.8rem; margin-top: 10px; min-height: 18px; text-align: center;"></p>
+  </div>
+</div>
 
     <!-- Encabezado Visible para Reportes Impresos -->
     <div class="print-header">
@@ -203,75 +197,49 @@
             </table>
         </div>
     </div>
+    <script>
 
-<script>
-    // 1. SUPABASE CLIENTE
-    const SUPABASE_URL = 'https://jtywxpiivmlyicxibvwy.supabase.co';
-    const SUPABASE_KEY = 'sb_publishable__4xJBaQpP30A_wt6qtvQjg_t1na3cqt';
-    const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+let ordenes = JSON.parse(localStorage.getItem('cyx_ordenes')) || [];
+let fotoBase64 = '';
 
-    // 2. GESTIÓN LOCAL DE ÓRDENES
-    let ordenes = JSON.parse(localStorage.getItem('cyx_ordenes')) || [];
-    let fotoBase64 = '';
-
-    const fotoInputEl = document.getElementById('foto');
-    if (fotoInputEl) {
-        fotoInputEl.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(evt) {
-                    fotoBase64 = evt.target.result;
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    }
-
-    const orderFormEl = document.getElementById('orderForm');
-    if (orderFormEl) {
-        orderFormEl.addEventListener('submit', async function(e) {
-            e.preventDefault();
-
-            let fotoUrlFinal = fotoBase64 || 'https://via.placeholder.com/50?text=Auto';
-            
-            // Si hay un archivo cargado, intenta subirlo a Supabase Storage
-            const fileInput = document.getElementById('foto');
-            if (fileInput && fileInput.files.length > 0) {
-                const subida = await subirFotoVehiculo(fileInput);
-                if (subida) fotoUrlFinal = subida;
-            }
-
-            const nuevaOrden = {
-                id: Date.now(),
-                placa: document.getElementById('placa').value.trim().toUpperCase(),
-                cliente: document.getElementById('cliente').value.trim(),
-                telefono: document.getElementById('telefono').value.trim(),
-                vehiculo: document.getElementById('vehiculo').value.trim(),
-                foto: fotoUrlFinal,
-                falla: document.getElementById('falla').value.trim(),
-                monto: document.getElementById('monto').value || '0',
-                estado: 'En Proceso'
+const fotoInputEl = document.getElementById('foto');
+if (fotoInputEl) {
+    fotoInputEl.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                fotoBase64 = evt.target.result;
             };
+            reader.readAsDataURL(file);
+        }
+    });
+}
 
-            // Guardar local
-            ordenes.unshift(nuevaOrden);
-            guardarYRenderizar();
-            
-            // Guardar en Supabase Database
-            await supabaseClient.from('ordenes').insert([{
-                cliente: nuevaOrden.cliente,
-                vehiculo: nuevaOrden.vehiculo,
-                placa: nuevaOrden.placa,
-                falla: nuevaOrden.falla,
-                foto_url: fotoUrlFinal
-            }]);
+const orderFormEl = document.getElementById('orderForm');
+if (orderFormEl) {
+    orderFormEl.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-            this.reset();
-            fotoBase64 = '';
-        });
-    }
+        const nuevaOrden = {
+            id: Date.now(),
+            placa: document.getElementById('placa').value.trim().toUpperCase(),
+            cliente: document.getElementById('cliente').value.trim(),
+            telefono: document.getElementById('telefono').value.trim(),
+            vehiculo: document.getElementById('vehiculo').value.trim(),
+            foto: fotoBase64 || 'https://via.placeholder.com/50?text=Auto',
+            falla: document.getElementById('falla').value.trim(),
+            monto: document.getElementById('monto').value || '0',
+            estado: 'En Proceso'
+        };
 
+        ordenes.unshift(nuevaOrden);
+        guardarYRenderizar();
+        
+        this.reset();
+        fotoBase64 = '';
+    });
+}
     function cambiarEstado(id) {
         ordenes = ordenes.map(o => {
             if (o.id === id) {
@@ -296,7 +264,7 @@
 
     function renderTabla(lista) {
         const tbody = document.getElementById('tablaOrdenes');
-        if (!tbody) return;
+
         tbody.innerHTML = '';
 
         if (lista.length === 0) {
@@ -336,65 +304,374 @@
         renderTabla(filtradas);
     }
 
-    // 3. AUTENTICACIÓN SUPABASE
-    async function checkAuth() {
-        const { data: { user }, error } = await supabaseClient.auth.getUser();
+    renderTabla(ordenes);
+</script>
+<script>
+  const SUPABASE_URL = 'https://jtywxpiivmlyicxibvwy.supabase.co';
+const SUPABASE_KEY = 'sb_publishable__4xJBaQpP30A_wt6qtvQjg_t1na3cqt';
 
-        if (error || !user) {
-            await supabaseClient.auth.signOut();
-            document.getElementById('auth-modal').style.display = 'flex';
-        } else {
-            document.getElementById('auth-modal').style.display = 'none';
-            verificarLicenciaKrece(user.id);
-        }
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+async function checkAuth() {
+  // Le pregunta directamente al servidor de Supabase si el usuario está baneado
+  const { data: { user }, error } = await supabaseClient.auth.getUser();
+
+  if (error || !user) {
+    await supabaseClient.auth.signOut();
+    document.getElementById('auth-modal').style.display = 'flex';
+  } else {
+    document.getElementById('auth-modal').style.display = 'none';
+  }
+}
+
+checkAuth();
+
+  async function loginUser() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-pass').value;
+    const errorEl = document.getElementById('auth-error');
+    errorEl.textContent = 'Verificando...';
+
+    const { error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
+      errorEl.textContent = 'Error: ' + error.message;
+    } else {
+      checkAuth();
+    }
+  }
+
+  async function registerUser() {
+    const email = document.getElementById('auth-email').value;
+    const password = document.getElementById('auth-pass').value;
+    const errorEl = document.getElementById('auth-error');
+    errorEl.textContent = 'Registrando cuenta...';
+
+    const { error } = await supabaseClient.auth.signUp({ email, password });
+    if (error) {
+      errorEl.textContent = 'Error: ' + error.message;
+    } else {
+      alert('¡Cuenta registrada con éxito! Ya puedes iniciar sesión.');
+      errorEl.textContent = '';
+    }
+  }
+
+  window.onload = checkAuth;
+  // --- SUBIR FOTO Y GUARDAR ORDEN ---
+  async function subirFotoVehiculo(fileInput) {
+    const file = fileInput.files[0];
+    if (!file) return null;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+    const filePath = `fotos/${fileName}`;
+
+    const { data, error } = await supabaseClient
+      .storage
+      .from('fotos-vehiculos')
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Error subiendo imagen:', error.message);
+      return null;
     }
 
-    async function loginUser() {
-        const email = document.getElementById('auth-email').value;
-        const password = document.getElementById('auth-pass').value;
-        const errorEl = document.getElementById('auth-error');
-        errorEl.textContent = 'Verificando...';
+    const { data: publicUrlData } = supabaseClient
+      .storage
+      .from('fotos-vehiculos')
+      .getPublicUrl(filePath);
 
-        const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-        if (error) {
-            errorEl.textContent = 'Error: ' + error.message;
-        } else {
-            checkAuth();
-        }
+    return publicUrlData.publicUrl;
+  }
+
+  const formOrden = document.getElementById('form-orden') || document.querySelector('form');
+  if (formOrden) {
+    formOrden.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fotoInput = document.getElementById('foto-vehiculo') || document.querySelector('input[type="file"]');
+      let fotoUrl = null;
+
+      if (fotoInput && fotoInput.files.length > 0) {
+        fotoUrl = await subirFotoVehiculo(fotoInput);
+      }
+
+      const nuevaOrden = {
+        cliente: document.getElementById('cliente')?.value || 'Sin nombre',
+        vehiculo: document.getElementById('vehiculo')?.value || 'Vehículo',
+        placa: document.getElementById('placa')?.value || 'SIN-PLACA',
+        falla: document.getElementById('falla')?.value || 'Sin descripción',
+        foto_url: fotoUrl
+      };
+
+      const { data, error } = await supabaseClient
+        .from('ordenes')
+        .insert([nuevaOrden]);
+
+      if (error) {
+        alert('❌ Error al guardar en Supabase: ' + error.message);
+      } else {
+        alert('🔥 ¡Orden guardada espectácuplus con su foto, mi pana!');
+        formOrden.reset();
+      }
+    });
+  }
+</script>
+<!-- ESTILOS DEL MODAL DE PLANES Y PAGO -->
+<style>
+  .btn-upgrade {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+  }
+  .hidden { display: none !important; }
+  .modal-card {
+    background: #121212;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 380px;
+    width: 90%;
+    color: #fff;
+    position: relative;
+    font-family: sans-serif;
+  }
+  .btn-close {
+    position: absolute; right: 15px; top: 10px;
+    background: none; border: none; color: #888; font-size: 24px; cursor: pointer;
+  }
+  .plan-toggle {
+    display: flex; background: #1e1e1e; border-radius: 20px; padding: 4px; margin-bottom: 8px;
+  }
+  .toggle-btn {
+    flex: 1; border: none; background: transparent; color: #aaa;
+    padding: 8px; border-radius: 16px; cursor: pointer; font-weight: 600;
+  }
+  .toggle-btn.active { background: #3b82f6; color: #fff; }
+  .discount-tag { display: block; text-align: center; color: #4ade80; font-size: 13px; margin-bottom: 16px; }
+  .plan-box {
+    border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; background: #18181b;
+  }
+  .badge-recommended { color: #60a5fa; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+  .price { font-size: 28px; font-weight: bold; }
+  .period { color: #aaa; font-size: 14px; }
+  .btn-action {
+    width: 100%; background: #3b82f6; border: none; color: #fff;
+    padding: 10px; border-radius: 8px; font-weight: bold; margin: 16px 0; cursor: pointer;
+  }
+  .features-list { list-style: none; padding: 0; font-size: 13px; color: #ccc; }
+  .features-list li { margin-bottom: 8px; }
+  .payment-box {
+    margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; font-size: 12px; line-height: 1.4;
+  }
+</style>
+
+<!-- BOTÓN PARA DESPLIEGUE -->
+<button id="btn-upgrade" class="btn-upgrade">⚡ Actualizar Plan</button>
+
+<!-- VENTANA MODAL FLOTANTE -->
+<div id="modal-plans" class="modal-overlay hidden">
+  <div class="modal-card">
+    <button class="btn-close" id="btn-close-modal">&times;</button>
+    
+    <div class="plan-toggle">
+      <button class="toggle-btn active" id="btn-mensual">Mensual</button>
+      <button class="toggle-btn" id="btn-anual">Anual</button>
+    </div>
+    <span class="discount-tag" id="discount-tag" style="opacity: 0.5;">🔥 Ahorra un 20% pagando anual</span>
+
+    <div class="plan-box">
+      <span class="badge-recommended">RECOMENDADO</span>
+      <h2 id="plan-title">CYX MotorGest Pro</h2>
+      <p class="plan-desc">Acceso ilimitado a la gestión de taller y reportes.</p>
+      
+      <div class="price-container">
+        <span class="price" id="plan-price">$9.99</span>
+        <span class="period" id="plan-period">/mes</span>
+      </div>
+
+      <button class="btn-action" id="btn-select-plan">Pagar con Zinli</button>
+
+      <ul class="features-list">
+        <li>✔️ Órdenes de trabajo ilimitadas</li>
+        <li>✔️ Subida de fotos de vehículos en HD</li>
+        <li>✔️ Reportes en PDF para WhatsApp</li>
+        <li>✔️ Soporte técnico prioritario</li>
+      </ul>
+
+      <!-- SECCIÓN PAGO ZINLI POR CORREO -->
+      <div id="payment-instructions" class="payment-box hidden">
+        <p><strong>Pasos para activar:</strong></p>
+        <p>1. Envía el monto exacto por Zinli al correo: <strong>cyx.devx@proton.me</strong></p>
+        <p>2. Envía la captura del pago a: <strong>cyx.devx@proton.me</strong></p>
+        <a id="btn-email-link" href="#" style="display:inline-block; margin-top:8px; color:#60a5fa; font-weight:bold;">✉️ Enviar Comprobante por Correo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LÓGICA JAVASCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnUpgrade = document.getElementById('btn-upgrade');
+    const modalPlans = document.getElementById('modal-plans');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const btnMensual = document.getElementById('btn-mensual');
+    const btnAnual = document.getElementById('btn-anual');
+    const planPrice = document.getElementById('plan-price');
+    const planPeriod = document.getElementById('plan-period');
+    const discountTag = document.getElementById('discount-tag');
+    const btnSelectPlan = document.getElementById('btn-select-plan');
+    const paymentInstructions = document.getElementById('payment-instructions');
+    const btnEmailLink = document.getElementById('btn-email-link');
+
+    let selectedPlan = "Mensual ($9.99)";
+
+    // Abrir y cerrar Modal
+    btnUpgrade?.addEventListener('click', () => modalPlans.classList.remove('hidden'));
+    btnCloseModal?.addEventListener('click', () => modalPlans.classList.add('hidden'));
+
+    const featuresList = document.querySelector('.features-list');
+
+    // Clic en MENSUAL
+    btnMensual?.addEventListener('click', () => {
+      btnMensual.classList.add('active');
+      btnAnual.classList.remove('active');
+      planPrice.textContent = '$9.99';
+      planPeriod.textContent = '/mes';
+      discountTag.style.opacity = '0';
+      selectedPlan = "Mensual ($9.99/mes)";
+      
+      // Beneficios Plan Mensual
+      if (featuresList) {
+        featuresList.innerHTML = `
+          <li>✔️ Hasta 50 órdenes de trabajo al mes</li>
+          <li>✔️ Fotos de vehículos (Calidad Estándar)</li>
+          <li>✔️ Reportes en PDF básicos</li>
+          <li>✔️ Soporte por correo electrónico</li>
+        `;
+      }
+    });
+
+    // Clic en ANUAL (El Plan VIP)
+    btnAnual?.addEventListener('click', () => {
+      btnAnual.classList.add('active');
+      btnMensual.classList.remove('active');
+      planPrice.textContent = '$99.99';
+      planPeriod.textContent = '/año (Pago único)';
+      discountTag.style.opacity = '1';
+      selectedPlan = "Anual VIP ($99.99/año)";
+      
+      // Beneficios Plan Anual
+      if (featuresList) {
+        featuresList.innerHTML = `
+          <li>🔥 <b>Órdenes de trabajo ILIMITADAS</b></li>
+          <li>🔥 <b>Fotos de vehículos en HD sin límite</b></li>
+          <li>🔥 Reportes en PDF con Logo Personalizado</li>
+          <li>🔥 Copia de seguridad semanal automática</li>
+          <li>🔥 Soporte prioritario directo por WhatsApp</li>
+        `;
+      }
+    });
+
+    // Mostrar instrucciones de pago y preparar mailto
+    btnSelectPlan?.addEventListener('click', () => {
+      paymentInstructions.classList.remove('hidden');
+      const subject = encodeURIComponent(`Comprobante de Pago Zinli - Plan ${selectedPlan}`);
+      const body = encodeURIComponent(`Hola CYX,\n\nAdjunto la captura del pago por Zinli para la activación del plan: ${selectedPlan}.\n\nCorreo registrado en la app: `);
+      btnEmailLink.href = `mailto:cyx.devx@proton.me?subject=${subject}&body=${body}`;
+    });
+  });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Service Worker activo', reg))
+        .catch(err => console.error('Error en Service Worker', err));
+    });
+  }
+// Variable global para controlar la verificación
+let expiracionLocal = localStorage.getItem('cyx_exp_date');
+</script>
+</script>
+
+async function verificarLicenciaKrece() {
+  const hoy = new Date();
+
+  // 1. SI ESTÁ OFFLINE: Revisa la fecha guardada en memoria local
+  if (!navigator.onLine) {
+    if (expiracionLocal && hoy > new Date(expiracionLocal)) {
+      bloquearPantallaApp("SIN CONEXIÓN: Tu licencia ha expirado. Conéctate a internet para actualizar tu pago.");
     }
+    return;
+  }
 
-    async function registerUser() {
-        const email = document.getElementById('auth-email').value;
-        const password = document.getElementById('auth-pass').value;
-        const errorEl = document.getElementById('auth-error');
-        errorEl.textContent = 'Registrando cuenta...';
+  // 2. SI HAY INTERNET (WiFi/Datos): Válida en tiempo real con Supabase
+  try {
+    const { data: perfil, error } = await supabaseClient
+      .from('perfiles')
+      .select('estado_pago, fecha_vencimiento')
+      .eq('id', usuarioActual.id)
+      .single();
 
-        const { error } = await supabaseClient.auth.signUp({ email, password });
-        if (error) {
-            errorEl.textContent = 'Error: ' + error.message;
-        } else {
-            alert('¡Cuenta registrada con éxito! Ya puedes iniciar sesión.');
-            errorEl.textContent = '';
-        }
+    if (error || !perfil) return;
+
+    // Guardar fecha para la próxima vez que esté offline
+    localStorage.setItem('cyx_exp_date', perfil.fecha_vencimiento);
+
+    // Validar si venció o si está suspendido
+    if (perfil.estado_pago !== 'activo' || hoy > new Date(perfil.fecha_vencimiento)) {
+      bloquearPantallaApp("LICENCIA VENCIDA: Realiza tu pago por Zinli para reactivar el sistema.");
+    } else {
+      desbloquearPantallaApp();
     }
+  } catch (err) {
+    console.error("Error verificando licencia:", err);
+  }
+}
 
-    async function subirFotoVehiculo(fileInput) {
-        const file = fileInput.files[0];
-        if (!file) return null;
+// Función para bloquear la pantalla por completo (Estilo Krece)
+function bloquearPantallaApp(mensaje) {
+  let bloqueoOverlay = document.getElementById('krece-lock-overlay');
+  if (!bloqueoOverlay) {
+    bloqueoOverlay = document.createElement('div');
+    bloqueoOverlay.id = 'krece-lock-overlay';
+    bloqueoOverlay.style = `
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      background: #09090b; color: #ffffff; z-index: 999999;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 20px; text-align: center; font-family: sans-serif;
+    `;
+    document.body.appendChild(bloqueoOverlay);
+  }
+  bloqueoOverlay.innerHTML = `
+    <h1 style="color: #ef4444; margin-bottom: 15px;">🔒 Acceso Bloqueado</h1>
+    <p style="font-size: 16px; color: #a1a1aa; max-width: 400px; margin-bottom: 20px;">${mensaje}</p>
+    <div style="background: #18181b; padding: 15px; border-radius: 8px; border: 1px solid #27272a;">
+      <p style="font-size: 14px; color: #3b82f6;">Pago por Zinli al número: <strong>+584XXXXXXXXX</strong></p>
+    </div>
+  `;
+}
 
-        const fileExt = file.name.split('.').pop();
-        const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
-        const filePath = `fotos/${fileName}`;
+function desbloquearPantallaApp() {
+  const bloqueoOverlay = document.getElementById('krece-lock-overlay');
+  if (bloqueoOverlay) bloqueoOverlay.remove();
+}
 
-        const { data, error } = await supabaseClient.storage.from('fotos-vehiculos').upload(filePath, file);
-
-        if (error) {
-            console.error('Error subiendo imagen:', error.message);
-            return null;
-        }
-
-        const { data: publicUrlData } = supabaseClient.storage.from('fotos-vehiculos').getPublicUrl(filePath);
-        return publicUrlData.publicUrl;
-    }
-
-    // 4. LÓGICA DE BLOQUEO OFFLINE/ONLINE (CALIDAD KRECE)
+// EJECUCIÓN AUTOMÁTICA
+window.addEventListener('load', verificarLicenciaKrece);
+window.addEventListener('online', verificarLicenciaKrece); // APENAS SE CONECTA A WIFI, SE EJECUTA DE UNA
+</script>
+</body>
+</html>
