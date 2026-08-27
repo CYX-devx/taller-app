@@ -350,6 +350,65 @@ checkAuth();
   }
 
   window.onload = checkAuth;
+  // --- SUBIR FOTO Y GUARDAR ORDEN ---
+  async function subirFotoVehiculo(fileInput) {
+    const file = fileInput.files[0];
+    if (!file) return null;
+
+    const fileExt = file.name.split('.').pop();
+    const fileName = `${Date.now()}_${Math.random().toString(36).substring(2, 7)}.${fileExt}`;
+    const filePath = `fotos/${fileName}`;
+
+    const { data, error } = await supabaseClient
+      .storage
+      .from('fotos-vehiculos')
+      .upload(filePath, file);
+
+    if (error) {
+      console.error('Error subiendo imagen:', error.message);
+      return null;
+    }
+
+    const { data: publicUrlData } = supabaseClient
+      .storage
+      .from('fotos-vehiculos')
+      .getPublicUrl(filePath);
+
+    return publicUrlData.publicUrl;
+  }
+
+  const formOrden = document.getElementById('form-orden') || document.querySelector('form');
+  if (formOrden) {
+    formOrden.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const fotoInput = document.getElementById('foto-vehiculo') || document.querySelector('input[type="file"]');
+      let fotoUrl = null;
+
+      if (fotoInput && fotoInput.files.length > 0) {
+        fotoUrl = await subirFotoVehiculo(fotoInput);
+      }
+
+      const nuevaOrden = {
+        cliente: document.getElementById('cliente')?.value || 'Sin nombre',
+        vehiculo: document.getElementById('vehiculo')?.value || 'Vehículo',
+        placa: document.getElementById('placa')?.value || 'SIN-PLACA',
+        falla: document.getElementById('falla')?.value || 'Sin descripción',
+        foto_url: fotoUrl
+      };
+
+      const { data, error } = await supabaseClient
+        .from('ordenes')
+        .insert([nuevaOrden]);
+
+      if (error) {
+        alert('❌ Error al guardar en Supabase: ' + error.message);
+      } else {
+        alert('🔥 ¡Orden guardada espectácuplus con su foto, mi pana!');
+        formOrden.reset();
+      }
+    });
+  }
 </script>
 </body>
 </html>
