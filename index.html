@@ -410,5 +410,168 @@ checkAuth();
     });
   }
 </script>
+<!-- ESTILOS DEL MODAL DE PLANES Y PAGO -->
+<style>
+  .btn-upgrade {
+    background: #2563eb;
+    color: #fff;
+    border: none;
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  .modal-overlay {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex; justify-content: center; align-items: center;
+    z-index: 1000;
+  }
+  .hidden { display: none !important; }
+  .modal-card {
+    background: #121212;
+    border: 1px solid #2a2a2a;
+    border-radius: 16px;
+    padding: 24px;
+    max-width: 380px;
+    width: 90%;
+    color: #fff;
+    position: relative;
+    font-family: sans-serif;
+  }
+  .btn-close {
+    position: absolute; right: 15px; top: 10px;
+    background: none; border: none; color: #888; font-size: 24px; cursor: pointer;
+  }
+  .plan-toggle {
+    display: flex; background: #1e1e1e; border-radius: 20px; padding: 4px; margin-bottom: 8px;
+  }
+  .toggle-btn {
+    flex: 1; border: none; background: transparent; color: #aaa;
+    padding: 8px; border-radius: 16px; cursor: pointer; font-weight: 600;
+  }
+  .toggle-btn.active { background: #3b82f6; color: #fff; }
+  .discount-tag { display: block; text-align: center; color: #4ade80; font-size: 13px; margin-bottom: 16px; }
+  .plan-box {
+    border: 2px solid #3b82f6; border-radius: 12px; padding: 16px; background: #18181b;
+  }
+  .badge-recommended { color: #60a5fa; font-size: 11px; font-weight: bold; letter-spacing: 1px; }
+  .price { font-size: 28px; font-weight: bold; }
+  .period { color: #aaa; font-size: 14px; }
+  .btn-action {
+    width: 100%; background: #3b82f6; border: none; color: #fff;
+    padding: 10px; border-radius: 8px; font-weight: bold; margin: 16px 0; cursor: pointer;
+  }
+  .features-list { list-style: none; padding: 0; font-size: 13px; color: #ccc; }
+  .features-list li { margin-bottom: 8px; }
+  .payment-box {
+    margin-top: 15px; background: #222; padding: 12px; border-radius: 8px; font-size: 12px; line-height: 1.4;
+  }
+</style>
+
+<!-- BOTÓN PARA DESPLIEGUE -->
+<button id="btn-upgrade" class="btn-upgrade">⚡ Actualizar Plan</button>
+
+<!-- VENTANA MODAL FLOTANTE -->
+<div id="modal-plans" class="modal-overlay hidden">
+  <div class="modal-card">
+    <button class="btn-close" id="btn-close-modal">&times;</button>
+    
+    <div class="plan-toggle">
+      <button class="toggle-btn active" id="btn-mensual">Mensual</button>
+      <button class="toggle-btn" id="btn-anual">Anual</button>
+    </div>
+    <span class="discount-tag" id="discount-tag" style="opacity: 0.5;">🔥 Ahorra un 20% pagando anual</span>
+
+    <div class="plan-box">
+      <span class="badge-recommended">RECOMENDADO</span>
+      <h2 id="plan-title">CYX MotorGest Pro</h2>
+      <p class="plan-desc">Acceso ilimitado a la gestión de taller y reportes.</p>
+      
+      <div class="price-container">
+        <span class="price" id="plan-price">$9.99</span>
+        <span class="period" id="plan-period">/mes</span>
+      </div>
+
+      <button class="btn-action" id="btn-select-plan">Pagar con Zinli</button>
+
+      <ul class="features-list">
+        <li>✔️ Órdenes de trabajo ilimitadas</li>
+        <li>✔️ Subida de fotos de vehículos en HD</li>
+        <li>✔️ Reportes en PDF para WhatsApp</li>
+        <li>✔️ Soporte técnico prioritario</li>
+      </ul>
+
+      <!-- SECCIÓN PAGO ZINLI POR CORREO -->
+      <div id="payment-instructions" class="payment-box hidden">
+        <p><strong>Pasos para activar:</strong></p>
+        <p>1. Envía el monto exacto por Zinli al correo: <strong>cyx.devx@proton.me</strong></p>
+        <p>2. Envía la captura del pago a: <strong>cyx.devx@proton.me</strong></p>
+        <a id="btn-email-link" href="#" style="display:inline-block; margin-top:8px; color:#60a5fa; font-weight:bold;">✉️ Enviar Comprobante por Correo</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LÓGICA JAVASCRIPT -->
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const btnUpgrade = document.getElementById('btn-upgrade');
+    const modalPlans = document.getElementById('modal-plans');
+    const btnCloseModal = document.getElementById('btn-close-modal');
+    const btnMensual = document.getElementById('btn-mensual');
+    const btnAnual = document.getElementById('btn-anual');
+    const planPrice = document.getElementById('plan-price');
+    const planPeriod = document.getElementById('plan-period');
+    const discountTag = document.getElementById('discount-tag');
+    const btnSelectPlan = document.getElementById('btn-select-plan');
+    const paymentInstructions = document.getElementById('payment-instructions');
+    const btnEmailLink = document.getElementById('btn-email-link');
+
+    let selectedPlan = "Mensual ($9.99)";
+
+    // Abrir y cerrar Modal
+    btnUpgrade?.addEventListener('click', () => modalPlans.classList.remove('hidden'));
+    btnCloseModal?.addEventListener('click', () => modalPlans.classList.add('hidden'));
+
+    // Switch Plan Mensual
+    btnMensual?.addEventListener('click', () => {
+      btnMensual.classList.add('active');
+      btnAnual.classList.remove('active');
+      planPrice.textContent = '$9.99';
+      planPeriod.textContent = '/mes';
+      discountTag.style.opacity = '0.5';
+      selectedPlan = "Mensual ($9.99)";
+    });
+
+    // Switch Plan Anual
+    btnAnual?.addEventListener('click', () => {
+      btnAnual.classList.add('active');
+      btnMensual.classList.remove('active');
+      planPrice.textContent = '$7.99';
+      planPeriod.textContent = '/mes (facturado anualmente)';
+      discountTag.style.opacity = '1';
+      selectedPlan = "Anual ($95.88/año)";
+    });
+
+    // Mostrar instrucciones de pago y preparar mailto
+    btnSelectPlan?.addEventListener('click', () => {
+      paymentInstructions.classList.remove('hidden');
+      const subject = encodeURIComponent(`Comprobante de Pago Zinli - Plan ${selectedPlan}`);
+      const body = encodeURIComponent(`Hola CYX,\n\nAdjunto la captura del pago por Zinli para la activación del plan: ${selectedPlan}.\n\nCorreo registrado en la app: `);
+      btnEmailLink.href = `mailto:cyx.devx@proton.me?subject=${subject}&body=${body}`;
+    });
+  });
+</script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then(reg => console.log('Service Worker activo', reg))
+        .catch(err => console.error('Error en Service Worker', err));
+    });
+  }
+</script>
 </body>
 </html>
