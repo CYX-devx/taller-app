@@ -537,7 +537,7 @@ checkAuth();
 
     const featuresList = document.querySelector('.features-list');
 
-    // Switch Plan Mensual
+    // Clic en MENSUAL
     btnMensual?.addEventListener('click', () => {
       btnMensual.classList.add('active');
       btnAnual.classList.remove('active');
@@ -546,34 +546,34 @@ checkAuth();
       discountTag.style.opacity = '0';
       selectedPlan = "Mensual ($9.99/mes)";
       
-      // Lista de beneficios Mensual
+      // Beneficios Plan Mensual
       if (featuresList) {
         featuresList.innerHTML = `
           <li>✔️ Hasta 50 órdenes de trabajo al mes</li>
-          <li>✔️ Fotos de vehículos (Calidad Normal)</li>
-          <li>✔️ Reportes en PDF estándar</li>
+          <li>✔️ Fotos de vehículos (Calidad Estándar)</li>
+          <li>✔️ Reportes en PDF básicos</li>
           <li>✔️ Soporte por correo electrónico</li>
         `;
       }
     });
 
-    // Switch Plan Anual (El VIP)
+    // Clic en ANUAL (El Plan VIP)
     btnAnual?.addEventListener('click', () => {
       btnAnual.classList.add('active');
       btnMensual.classList.remove('active');
       planPrice.textContent = '$99.99';
       planPeriod.textContent = '/año (Pago único)';
       discountTag.style.opacity = '1';
-      selectedPlan = "Anual VIP ($99.99/año)" ;
+      selectedPlan = "Anual VIP ($99.99/año)";
       
-      // Lista de beneficios Anual
+      // Beneficios Plan Anual
       if (featuresList) {
         featuresList.innerHTML = `
           <li>🔥 <b>Órdenes de trabajo ILIMITADAS</b></li>
           <li>🔥 <b>Fotos de vehículos en HD sin límite</b></li>
           <li>🔥 Reportes en PDF con Logo Personalizado</li>
           <li>🔥 Copia de seguridad semanal automática</li>
-          <li>🔥 Soporte prioritario por WhatsApp</li>
+          <li>🔥 Soporte prioritario directo por WhatsApp</li>
         `;
       }
     });
